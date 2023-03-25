@@ -1,0 +1,3 @@
+.item div:not(.dis, .menuButtonDisabled, .toolOnly) {
+    pointer-events: initial !important;
+}

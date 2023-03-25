@@ -1,0 +1,7 @@
+**/.vscode/**
+**/node_modules/**
+**/self_tests/**
+**/babel_dist/**
+**/dist*/**
+package-lock.json
+**/dist_webpack/**
