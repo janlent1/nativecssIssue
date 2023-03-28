@@ -42,9 +42,35 @@ module.exports = {
         }
     ],
     target: "browserslist: last 1 Chrome versions, last 1 Edge versions, iOS >= 10.7",
-    mode: 'development',
-    entry: path.resolve(__dirname, 'source_folder/TestJsFile.js'),
-    module: {  
+    entry: {
+        main: {
+            import: ['@babel/polyfill',path.resolve(__dirname, 'source_folder/TestJsFile.js')],
+        },
+        secondMain: {
+            import: ['@babel/polyfill',path.resolve(__dirname, 'source_folder/secondTestJsFile.js')],
+        }
+    },
+    optimization: {
+        nodeEnv:  "development",
+        usedExports: 'global',
+        removeAvailableModules: true,
+        removeEmptyChunks: true,
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+                common: {
+                    name: false,
+                    reuseExistingChunk: true,
+                    minChunks: 1,
+                    test(module) {
+                        return true;
+                    }
+                }
+            }
+        }
+    }, 
+    module: { 
+        unsafeCache: true, 
         rules: [
             {
                 test: /\.css$/,
@@ -57,21 +83,44 @@ module.exports = {
                 test: /\.(js)$/,
                 exclude: /node_modules/,
                 use: [babelLoader]
-            }
+            },
+            {
+                test: /\.(woff)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'fonts/[name].[hash][ext]'
+                },
+                resolve: {
+                    fullySpecified: false
+                }
+            },
         ]
     },
+    resolve: {
+        extensions: [".js", ".ts", ".tsx"],
+        modules: [
+            './source_folder',
+            'node_modules'
+        ],
+        // By not specifying a file extension, it will search using "extensions" defined above.
+        alias: {
+            "current-theme": path.resolve('./source_folder', 'testTheme')
+        }
+    },
     output: {
+        pathinfo: false,
         path: path.resolve(__dirname, './dist_webpack'),
-        filename: 'bundle.js',
+        filename: '[name].bundle.js',
+        cssFilename: '[name].bundle.css',
+        chunkFilename: '[name].chunk.bundle.js',
+        cssChunkFilename: '[name].chunk.bundle.css',
+        publicPath: './',
     },
     experiments: {
         css: true
     },
-    devtool:'source-map',
+    devtool: false,
     devServer: {
-         static: path.resolve(__dirname, './dist'),
-    },
-    resolve: {
-        extensions: ['*', '.js']
+        static: path.resolve(__dirname, './dist'),
     },
 }

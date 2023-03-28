@@ -7,14 +7,13 @@
     "@babel/plugin-proposal-optional-chaining": "^7.18.9",
     "@babel/plugin-transform-classes": "^7.18.9",
     "@babel/plugin-transform-modules-commonjs": "^7.18.6",
-    "babel": "^6.23.0",
-    "babel-cli": "^6.26.0",
+    "@babel/polyfill": "^7.12.1",
     "html-webpack-plugin": "5.5.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.9",
-    "@babel/core": "^7.18.13",
-    "@babel/preset-env": "^7.18.10",
+    "@babel/cli": "7.19.3",
+    "@babel/core": "7.20.12",
+    "@babel/preset-env": "7.20.2",
     "babel-loader": "^8.2.5",
     "webpack": "^5.76.3",
     "webpack-cli": "^5.0.1",
@@ -22,7 +21,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "node node_modules/webpack/bin/webpack.js"
+    "build": "node node_modules/webpack/bin/webpack.js",
+    "start": "node node_modules/webpack/bin/webpack serve --mode development"
   },
   "author": "Jan Lentmaier"
 }
